@@ -1,39 +1,46 @@
-var formulario = document.querySelector("#form")
+// Esta aplicación crea una lista de invitados.
+// Los invitados pueden ser agregados a través de un formulario
+// Se pueden borrar invitados de la lista usando el botón
+const lista = document.getElementById("lista-de-invitados")
 
-formulario.onsubmit = function(e) {
+//Cambie la palabra reservada var por const de todas las variables
+const formulario = document.querySelector("form");
 
-  e.prevent();
-  
-  var n = formulario.elements[0]
-  var e = formulario.elements[1]
-  var na = formulario.elements[2]
+formulario.onsubmit = function (e) {
 
-  var nombre = n.value
-  var edad = e.value
+  e.preventDefault();
 
-  var i = na.selectedIndex
-  var nacionalidad = na.options[i].value
+  const name = formulario.elements[0]
+  const age = formulario.elements[1]
+  const nationality = formulario.elements[2]
+
+  const nombre = name.value
+  const edad = age.value
+
+  const index = nationality.selectedIndex
+  const nacionalidad = nationality.options[index].value
   console.log(nombre, edad)
   console.log(nacionalidad)
 
   if (nombre.length === 0) {
-    n.classList.add("error")
+    name.classList.add("error")
   }
   if (edad < 18 || edad > 120) {
-    e.classList.add("error")
+    age.classList.add("error")
   }
 
-if (nombre.length > 0 
-  && (edad > 18 
-    && edad < 120) ) {
-  agregarInvitado(nombre, edad, nacionalidad)
+  if (nombre.length > 0
+    && (edad > 18
+      && edad < 120)) {
+    agregarInvitado(nombre, edad, nacionalidad)
   }
 }
 
-var botonBorrar = document.createElement("button")
+
+const botonBorrar = document.createElement("button")
 botonBorrar.textContent = "Eliminar invitado"
 botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
+const corteLinea = document.createElement("br")
 document.body.appendChild(corteLinea)
 document.body.appendChild(botonBorrar);
 
@@ -52,46 +59,30 @@ function agregarInvitado(nombre, edad, nacionalidad) {
     nacionalidad = "Peruana"
   }
 
-var lista = document.getElementById("lista-de-invitados")
+  crearElemento("Nombre", nombre)
+  crearElemento("Edad", edad)
+  crearElemento("Nacionalidad", nacionalidad)
 
-var elementoLista = document.createElement("div")
-elementoLista.classList.added("elemento-lista")
-lista.appendChild(elementoLista)
-
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = "Nombre: "
-inputNombre.value = nombre 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
-
-function crearElemento(descripcion, valor) {
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = descripcion + ": "
-inputNombre.value = valor 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
 }
 
-crearElemento("Nombre", nombre)
-crearElemento("Edad", edad)
-crearElemento("Nacionalidad", nacionalidad)
+botonBorrar.onclick = function () {
+  // this.parentNode.style.display = 'none';
+  // botonBorrar.parentNode.remove()
+}
 
+function crearElemento(descripcion, valor) {
 
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-elementoLista.appendChild(corteLinea)
-elementoLista.appendChild(botonBorrar);
+  const elementoLista = document.createElement("div")
+  elementoLista.classList.add("elemento-lista")
+ 
 
- botonBorrar.onclick = function() {
-// this.parentNode.style.display = 'none';
-botonBorrar.parentNode.remove()
-  }
+  const spanNombre = document.createElement("span");
+  const inputNombre = document.createElement("input");
+  const espacio = document.createElement("br");
+  spanNombre.textContent = descripcion + ": ";
+  inputNombre.value = valor;
+  elementoLista.appendChild(spanNombre);
+  elementoLista.appendChild(inputNombre);
+  elementoLista.appendChild(espacio);
+  lista.appendChild(elementoLista);
 }
